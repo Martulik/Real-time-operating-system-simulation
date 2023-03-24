@@ -9,9 +9,9 @@
 
 #define TASK(TaskID) void TaskID(void)
 
-typedef void TTaskCall(void);
+typedef void TTaskCall();
 int ActivateTask(TTaskCall entry, int priority, char *name);
-void TerminateTask(void);
+void TerminateTask();
 int StartOS(TTaskCall entry, int priority, char *name);
 void ShutdownOS();
 void InitRes(int ResNum, char *name);

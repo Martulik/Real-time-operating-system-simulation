@@ -7,8 +7,8 @@ void InitializeStacks(int numStack)
     char cushionSpace[100000];
     cushionSpace[99999] = 1; // отключаем оптимизацию массивов
     for (int i = 0; i <= MAX_TASK; ++i) {
-        if (!setjmp(InitStacks[i])) {
-            continue;
+        if (!setjmp(InitStacks[i])) { // функция setjmp - сохраняет значения окружения для возврата управления программой в точку сохранения
+            continue;                  //можно восстановить окружение командой longjmp
         } else {
             TaskQueue[RunningTask].entry();
             break;
@@ -33,7 +33,7 @@ int StartOS(TTaskCall entry, int priority, char *name)
     } // создание массива задач
     TaskQueue[MAX_TASK - 1].next = 0; // присваиваем последнему элементу 0
     TaskQueue[0].prev = MAX_TASK - 1; // присваиваем предпоследний
-    if (!setjmp(MainContext)) {
+    if (!setjmp(MainContext)) {     //если это первый вызов сохранения контекта (setjmp вернул 0), то
         ActivateTask(entry, priority, name); // запускаем функцию активации задачи
     }
     return 0;
